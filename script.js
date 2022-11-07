@@ -193,7 +193,7 @@
 // console.log(alex);  
 
 //*** Контекст вызова.This ***//
-"use strict";
+// "use strict";
 // function showThis(a, b){
 //     console.log(this); //1)Обычная фунция: если не сторое тогда работает this == windiw, строгое == underfined
 //     function sum () {
@@ -246,22 +246,71 @@
 // console.log(double(13));
 //4) Ручная привязка this : call, apply, bind
 
-const btn = document.querySelector("button");
+// const btn = document.querySelector("button");
+//1
+// btn.addEventListener("click",function(){ // в класическом методе
+//     // console.log(this); // контекстом вызова будет сам элемент
+//     this.style.backgroundColor = "black"; //редко используется обычно ivent.target
+// });
+//2
+// btn.addEventListener("click",() => { // в стрелочном методе будет ошибка т.к нет контекста вызова
+//     this.style.backgroundColor = "black"; //
+// });
+//3
+// btn.addEventListener("click",(е) => { // через event.target
+//     е.target.style.backgroundColor = "black"; //
+// });
 
-btn.addEventListener("click",function(){ // в класическом методе
-    // console.log(this); // контекстом вызова будет сам элемент
-    this.style.backgroundColor = "black"; //редко используется обычно ivent.target
-});
 
-const obj = {
-    num: 5,
-    sayNamber: function(){
-        const say = () => {// нет своего контекста из за стрелочного получим родителя
-            console.log(this.num);
-        };
+// const obj = {
+//     num: 5,
+//     sayNamber: function(){
+//         const say = () => {// нет своего контекста из за стрелочного получим родителя
+//             console.log(this.num);
+//         };
 
-        say();
+//         say();
+//     }
+// };
+
+// obj.sayNamber();
+
+// const double = a => a * 2; //если в одну строку & 1 аргумент то можно без {} & ()
+
+// console.log(double);
+
+//***  Классы --- красивая обертка функции конструкции ***//
+
+class Rectangle { // создание класса
+    constructor(height, width) {
+        this.height = height;
+        this.width = width;
     }
-};
 
-obj.sayNamber();
+    calcArea() {
+        return this.height * this.width;
+    }
+}
+
+class ColoredRectangleWithNext extends Rectangle{ // будет наследывать 
+    constructor (height, width, text, bgColor) {
+        super(height, width); // вызывает тоже самое что было у родителя !!!первой строчкой
+        this.text = text;
+        this.bgColor = bgColor;
+    }
+
+    showMyProps() {
+        console.log(`Текст : ${this.text}, цвет ${this.bgColor}`);
+    }
+}
+
+const div = new ColoredRectangleWithNext(25, 10 ,"Hello world", "red");
+
+div.showMyProps();
+console.log(div.calcArea());
+
+// const square = new Rectangle(10,10);
+// const long = new Rectangle(20,100);// запишуться в эту строчку ,объект
+
+// console.log(long.calcArea());
+// console.log(square.calcArea());

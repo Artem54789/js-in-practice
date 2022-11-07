@@ -191,3 +191,77 @@
 
 // console.log(ivan);
 // console.log(alex);  
+
+//*** Контекст вызова.This ***//
+"use strict";
+// function showThis(a, b){
+//     console.log(this); //1)Обычная фунция: если не сторое тогда работает this == windiw, строгое == underfined
+//     function sum () {
+//         return a + b; //чтобы получить 9
+//     }
+
+//     console.log(sum());
+// }
+// showThis(4,5);
+
+// const obj = {
+//     a:20,
+//     b:15,
+//     sum: function() {
+//         console.log(this);//2) контекст у методов объекта - сам объект
+//     }
+// };
+// obj.sum();
+
+// function User(name, id) { // для каждого отдельного пользователя есть имя и ид
+//         this.name = name;
+//         this.id = id;
+//         this.human = true;
+//         this.hello = function() {
+//             console.log(`Hello ${this.name}`); // 3)this конструторах  и классах = это новый экзамляр объектов
+//         };
+// }
+
+// let ivan = new User('Ivan', 28);
+
+
+// function sayName (surname) {
+//     console.log(this); // контекст вызова
+//     console.log(this.name + surname);
+// }
+
+// const user = {
+//     name: 'John' // св-во объекта
+// };
+
+// sayName.call(user, "Smith");//1.одно и тоже только разный синтаксис
+// sayName.apply(user, ["Smith"]);//2.одно и тоже только разный синтаксис
+
+// function count(num) {
+//     return this*num;
+// }
+
+// const double = count.bind(2); // 3.помещаем новую фунцию 
+// console.log(double(3));
+// console.log(double(13));
+//4) Ручная привязка this : call, apply, bind
+
+const btn = document.querySelector("button");
+
+btn.addEventListener("click",function(){ // в класическом методе
+    // console.log(this); // контекстом вызова будет сам элемент
+    this.style.backgroundColor = "black"; //редко используется обычно ivent.target
+});
+
+const obj = {
+    num: 5,
+    sayNamber: function(){
+        const say = () => {// нет своего контекста из за стрелочного получим родителя
+            console.log(this.num);
+        };
+
+        say();
+    }
+};
+
+obj.sayNamber();
